@@ -1,0 +1,9 @@
+body {
+    background-image: url('../images/firefox.jpg');
+    background-size: 100%;
+}
+
+h1, p {
+    font-family: Sans-serif;
+    color: white;
+}

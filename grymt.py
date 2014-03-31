@@ -252,7 +252,7 @@ def copy_files(source, dest, processed_files):
 
 
 def run(
-        source_directory='./client',
+        source_directory,
         output_directory='./dist',
         wipe_first=False,
         inline_js=False,
@@ -266,6 +266,10 @@ def run(
             shutil.rmtree(output_directory)
 
     processed_files = []
+    if not source_directory:
+        raise ValueError("no directory to read from set")
+    if not os.path.isdir(source_directory):
+        raise IOError('%s is not a directory' % source_directory)
     for html_file in _find_html_pages(source_directory):
         page = Page(
             html_file,
@@ -288,12 +292,11 @@ def main():
         '-s',
         '--source-directory',
         help='Where the raw stuff is',
-        default='./client',
     )
     parser.add_argument(
         '-o',
         '--output-directory',
-        help='Where the generated stuff goes',
+        help='Where the generated stuff goes (default ./dist)',
         default='./dist',
     )
     parser.add_argument(
