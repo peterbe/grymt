@@ -22,6 +22,14 @@ the [source](https://github.com/peterbe/buggy/blob/master/client/index.html)
 with the output by viewing the HTML source on
 [buggy.peterbe.com](http://buggy.peterbe.com/).
 
+Alternatively, in this project root there is a full app called `exampleapp`.
+Try running,
+
+```
+python grymt.py -s exampleapp
+```
+
+Now inspect what was created in `./dist/`.
 
 How to use it
 -------------
