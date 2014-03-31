@@ -142,7 +142,10 @@ class Page(object):
                 if self.inline_js:
                     output_directory = self.output_directory
                 for src in src_regex.findall(bulk):
-                    path = os.path.join(self.source_directory, src)
+                    if src.startswith('/'):
+                        path = self.source_directory + src
+                    else:
+                        path = os.path.join(self.source_directory, src)
                     this_content = read(path)
                     self.processed_files.append(path)
                     if not already_minified(os.path.basename(path)):
@@ -157,7 +160,10 @@ class Page(object):
                 if self.inline_css:
                     output_directory = self.output_directory
                 for href in href_regex.findall(bulk):
-                    path = os.path.join(self.source_directory, href)
+                    if href.startswith('/'):
+                        path = self.source_directory + href
+                    else:
+                        path = os.path.join(self.source_directory, href)
                     this_content = read(path)
                     this_content = hash_all_css_images(
                         this_content,
