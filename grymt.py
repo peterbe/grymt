@@ -60,8 +60,11 @@ def mkdir(newdir):
         os.mkdir(newdir)
 
 
-def get_git_revision():
-    return subprocess.check_output('git rev-parse HEAD'.split()).strip()
+def get_git_revision(short=False):
+    sha = subprocess.check_output('git rev-parse HEAD'.split()).strip()
+    if short:
+        sha = sha[:10]
+    return sha
 
 
 def already_minified(filename):
@@ -228,6 +231,11 @@ class Page(object):
         else:
             content = content.replace('<!--!', '<!--')
 
+        if '$git_revision_short' in content:
+            content = content.replace(
+                '$git_revision_short',
+                get_git_revision(short=True)
+            )
         if '$git_revision' in content:
             content = content.replace(
                 '$git_revision',

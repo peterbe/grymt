@@ -114,8 +114,8 @@ makes it easier for the browser to start rendering stuff to the screen sooner.
 * Files like `somelib.min.js` or `someframework-min.css` doesn't get minimized
 again.
 
-* You can put `$git_revision` anywhere in your HTML that gets converted to
-the current git HEAD sha.
+* You can put `$git_revision` (or `$git_revision_short`) anywhere in your
+HTML that gets converted to the current git HEAD sha.
 
 * All images referenced in CSS gets unique and nice names that makes it
 possible to set far-future cache headers on them.
