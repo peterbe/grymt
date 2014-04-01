@@ -200,14 +200,18 @@ class Page(object):
                         datetime.datetime.utcnow().strftime('%Y-%m-%d')
                     )
 
+                if destination_name.startswith('/'):
+                    destination_name = destination_name[1:]
                 destination_path = os.path.join(
                     self.output_directory,
                     destination_name
                 )
 
                 write(destination_path, combined)
-                destination_path = destination_path.replace(self.output_directory, '')
-                #destination_path = os.path.basename(destination_path)
+                remove = self.output_directory
+                if remove.endswith('/'):
+                    remove = remove[:-1]
+                destination_path = destination_path.replace(remove, '')
                 content = content.replace(
                     whole,
                     tag_template % destination_path
