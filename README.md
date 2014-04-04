@@ -11,8 +11,8 @@ comments you put in your HTML file(s).
 
 * Ultimately `grymt` is a solution to not being able to use
  [Grunt](http://gruntjs.com/) as
-  desired. Grunt is great but it's hard to get it to work exactly as
-  you like. Individual Grunt "recipes" work well but not all together.
+  desired. Grunt is a great framework but it's hard to get it to work exactly as
+  you like. Individual Grunt "recipes" work, but not all together.
 
 Demo
 ----
@@ -26,7 +26,7 @@ Alternatively, in this project root there is a full app called `exampleapp`.
 Try running,
 
 ```
-python grymt.py -s exampleapp
+python grymt.py exampleapp
 ```
 
 Now inspect what was created in `./dist/`.

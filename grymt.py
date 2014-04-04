@@ -307,8 +307,7 @@ def main():
     import argparse
     parser = argparse.ArgumentParser()
     parser.add_argument(
-        '-s',
-        '--source-directory',
+        'source_directory',
         help='Where the raw stuff is',
     )
     parser.add_argument(
