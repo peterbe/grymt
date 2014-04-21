@@ -112,7 +112,8 @@ class Page(object):
     def __init__(self, path, source_directory, output_directory,
                  compress_js=True, compress_css=True,
                  inline_js=False, inline_css=True,
-                 remove_html_comments=False):
+                 remove_html_comments=False,
+                 git_revision=None):
         self.path = path
         self.source_directory = source_directory
         if not output_directory.endswith('/'):
@@ -124,6 +125,7 @@ class Page(object):
         self.inline_css = inline_css
         self.remove_html_comments = remove_html_comments
         self.processed_files = [path]
+        self.git_revision = git_revision
 
     def _parse_html(self):
         content = read(self.path)
@@ -234,12 +236,12 @@ class Page(object):
         if '$git_revision_short' in content:
             content = content.replace(
                 '$git_revision_short',
-                get_git_revision(short=True)
+                self.get_git_revision(short=True)
             )
         if '$git_revision' in content:
             content = content.replace(
                 '$git_revision',
-                get_git_revision()
+                self.get_git_revision()
             )
 
         return content
@@ -251,6 +253,15 @@ class Page(object):
             self.output_directory
         )
         write(out_path, new_content)
+
+    def get_git_revision(self, short=False):
+        if self.git_revision:
+            if short:
+                return self.git_revision[:10]
+            else:
+                return self.git_revision
+        else:
+            return get_git_revision(short=short)
 
 
 def copy_files(source, dest, processed_files):
@@ -276,6 +287,7 @@ def run(
         inline_js=False,
         inline_css=False,
         remove_html_comments=False,
+        git_revision=None,
     ):
 
     if wipe_first:
@@ -296,6 +308,7 @@ def run(
             inline_js=inline_js,
             inline_css=inline_css,
             remove_html_comments=remove_html_comments,
+            git_revision=git_revision,
         )
         page.parse()
         processed_files.extend(page.processed_files)
@@ -345,6 +358,11 @@ def main():
         dest='inline_js',
         action='store_true'
     )
+    parser.add_argument(
+        '--git-revision',
+        help='Known git revision sha to use',
+        default='',
+    )
     args = parser.parse_args()
     return run(
         source_directory=args.source_directory,
@@ -353,6 +371,7 @@ def main():
         inline_js=args.inline_js,
         inline_css=args.inline_css,
         remove_html_comments=args.remove_html_comments,
+        git_revision=args.git_revision,
     )
 
 

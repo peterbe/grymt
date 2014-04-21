@@ -132,3 +132,17 @@ possible to set far-future cache headers on them.
 That makes it so that `window.DEBUG` is `false` when in production.
 
 * It's fast.
+
+
+About --git-revision
+--------------------
+
+If you put something like `$git_revision` or `$git_revision_short` in your
+html, grymt will automatically execute a shell command of `git rev-parse HEAD`.
+But this might not work if your copy of the files (that you're running grymt
+on) isn't in a git repository.
+
+So, the solution is instead to supply it on the command line like this:
+```
+grymt --git-revision e30a0a52f6f5223ec043056a55d05aa53d33b508 ./somedirectory
+```
