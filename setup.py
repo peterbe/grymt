@@ -14,7 +14,7 @@ setup(
     py_modules=['grymt'],
     entry_points={
         'console_scripts': ['grymt = grymt:main']
-        },
+    },
     url='https://github.com/peterbe/grymt',
     include_package_data=True,
     install_requires=['cssmin', 'jsmin'],
