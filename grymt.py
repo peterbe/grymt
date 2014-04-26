@@ -107,6 +107,21 @@ def hash_all_css_images(css_code, rel_dir, source_dir, dest_dir):
 
     return css_code
 
+
+def minify_javascript(code):
+    try:
+        p = subprocess.Popen(
+            ['uglifyjs'],
+            stdout=subprocess.PIPE,
+            stdin=subprocess.PIPE,
+            stderr=subprocess.PIPE
+        )
+        stdout, stderr = p.communicate(input=code)
+        return stdout
+    except OSError:
+        return jsmin.jsmin(code)
+
+
 class Page(object):
 
     def __init__(self, path, source_directory, output_directory,
@@ -154,7 +169,7 @@ class Page(object):
                     this_content = read(path)
                     self.processed_files.append(path)
                     if not already_minified(os.path.basename(path)):
-                        this_content = jsmin.jsmin(this_content)
+                        this_content = minify_javascript(this_content)
                     combined.append('/* %s */' % src)
                     combined.append(this_content.strip())
                 if self.inline_js:

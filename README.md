@@ -146,3 +146,16 @@ So, the solution is instead to supply it on the command line like this:
 ```
 grymt --git-revision e30a0a52f6f5223ec043056a55d05aa53d33b508 ./somedirectory
 ```
+
+
+Uglifyjs instead of jsmin
+-------------------------
+
+The advantage of `jsmin` is that it's really easy to install and use
+and it's in Python.
+
+The advantage of `uglifyjs` is that it's much better at optimizing the
+Javascript code.
+
+By default, `grymt` tries to use `uglifyjs` on the command line and if
+it's not available or executable, it falls back on `jsmin`.
