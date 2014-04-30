@@ -104,7 +104,7 @@ can become:
 <style>
 ...content of foo.css minified...
 ...content of bar.css minified...
-</head>
+</style>
 ```
 
 which is, depending on circumstances, a good web performance optimization trick
