@@ -92,6 +92,7 @@ def hash_all_css_images(css_code, rel_dir, source_dir, dest_dir):
         new_filename = filename
         full_path = os.path.abspath(os.path.join(rel_dir, filename))
 
+
         if os.path.isfile(full_path):
             hash = hashlib.md5(open(full_path, 'rb').read()).hexdigest()[:10]
             a, b = os.path.splitext(filename)
@@ -116,7 +117,7 @@ def minify_javascript(code):
             stdin=subprocess.PIPE,
             stderr=subprocess.PIPE
         )
-        stdout, stderr = p.communicate(input=code)
+        stdout, stderr = p.communicate(input=code.encode('utf-8'))
         return stdout
     except OSError:
         return jsmin.jsmin(code)
@@ -151,9 +152,12 @@ class Page(object):
                 continue
             else:
                 output_directory = self.output_directory
+                destination_name_dir = os.path.dirname(destination_name)
+                if destination_name_dir.startswith('/'):
+                    destination_name_dir = destination_name_dir[1:]
                 output_directory = os.path.join(
                     output_directory,
-                    os.path.dirname(destination_name)
+                    destination_name_dir
                 )
 
             combined = []
@@ -212,7 +216,7 @@ class Page(object):
                 if '$hash' in destination_name:
                     destination_name = destination_name.replace(
                         '$hash',
-                        hashlib.md5(combined).hexdigest()[:7]
+                        hashlib.md5(combined.encode('utf-8')).hexdigest()[:7]
                     )
                 if '$date' in destination_name:
                     destination_name = destination_name.replace(
