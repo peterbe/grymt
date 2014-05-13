@@ -12,6 +12,10 @@ import cssmin
 import jsmin
 
 
+build_inline_regex = re.compile(
+    '(<\!--\s*build:(include)\s+([\w\$\-\./]*)\s*-->)',
+    re.MULTILINE | re.DOTALL
+)
 build_regex = re.compile(
     '(<\!--\s*build:(\w+)\s+([\w\$\-\./]*)\s*-->(.*?)<\!--\s*endbuild\s-->)',
     re.MULTILINE | re.DOTALL
@@ -145,6 +149,16 @@ class Page(object):
 
     def _parse_html(self):
         content = read(self.path)
+        for whole, type_, parameter in build_inline_regex.findall(content):
+            if type_ == 'include':
+                if parameter.startswith('/'):
+                    parameter = parameter[1:]
+                file_path = os.path.join(os.path.dirname(self.path), parameter)
+                with open(file_path) as f:
+                    content = content.replace(whole, f.read())
+            else:
+                raise NotImplementedError(type_)
+
         for whole, type_, destination_name, bulk in build_regex.findall(content):
 
             if type_ == 'remove':

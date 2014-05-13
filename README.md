@@ -133,6 +133,15 @@ That makes it so that `window.DEBUG` is `false` when in production.
 
 * It's fast.
 
+* You can use include files that thus only get inserted in the built code.
+For example:
+
+```html
+<head>
+<!-- build:include /google-analytics.html -->
+</head>
+```
+
 
 About --git-revision
 --------------------
