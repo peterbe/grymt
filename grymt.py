@@ -28,7 +28,7 @@ def _find_html_pages(source):
     paths = []
     for each in os.listdir(source):
         path = os.path.join(source, each)
-        if os.path.isdir(path):
+        if os.path.isdir(path) and not each.startswith('.'):
             paths.extend(_find_html_pages(path))
         elif os.path.isfile(path) and path.endswith('.html'):
             paths.append(path)
