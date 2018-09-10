@@ -220,7 +220,10 @@ class Page(object):
                     tag_template = '<link rel="stylesheet" href="%s">'
 
             combined.append('')  # so it ends with a newline
-            combined = '\n'.join(combined)
+            combined = '\n'.join(
+                [unicode(x, 'utf-8') if isinstance(x, str) else x
+                for x in combined]
+            )
             if template:
                 content = content.replace(
                     whole,

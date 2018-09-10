@@ -5,7 +5,7 @@ from setuptools import setup, find_packages
 
 setup(
     name='grymt',
-    version='1.4',
+    version='1.5',
     description='Preps a set of HTML files for deployment',
     long_description=open('README.md').read(),
     author='Peter Bengtsson',
